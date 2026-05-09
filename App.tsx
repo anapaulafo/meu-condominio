@@ -3,7 +3,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import LoginScreen from "./src/screens/LoginScreen";
 import CadastroScreen from "./src/screens/CadastroScreen";
-import AppTabs from "./src/navigation/AppTabs";
+
+import MoradorTabs from "./src/navigation/MoradorTabs";
+import PorteiroTabs from "./src/navigation/PorteiroTabs";
 
 const Stack = createNativeStackNavigator();
 
@@ -12,17 +14,18 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} />
+
         <Stack.Screen name="Cadastro" component={CadastroScreen} />
 
         <Stack.Screen
           name="MoradorTabs"
-          component={AppTabs}
+          component={MoradorTabs}
           options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="PorteiroTabs"
-          component={AppTabs}
+          component={PorteiroTabs}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
