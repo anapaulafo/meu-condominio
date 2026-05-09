@@ -1,21 +1,40 @@
-import { useState } from 'react'
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
-import { supabase } from '../services/supabase'
+import { useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+
+import { supabase } from "../services/supabase";
 
 export default function LoginScreen({ navigation }: any) {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   async function handleLogin() {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
-    })
+    });
 
     if (error) {
-      Alert.alert('Erro', error.message)
+      Alert.alert("Erro", error.message);
+      return;
+    }
+
+    const userId = data.user.id;
+
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", userId)
+      .single();
+
+    if (userError) {
+      Alert.alert("Erro", userError.message);
+      return;
+    }
+
+    if (userData.role === "porteiro") {
+      navigation.replace("PorteiroTabs");
     } else {
-      navigation.replace('Home')
+      navigation.replace("MoradorTabs");
     }
   }
 
@@ -38,15 +57,32 @@ export default function LoginScreen({ navigation }: any) {
 
       <Button title="Entrar" onPress={handleLogin} />
 
-      <Text onPress={() => navigation.navigate('Cadastro')}>
+      <Text style={styles.link} onPress={() => navigation.navigate("Cadastro")}>
         Não tem conta? Cadastre-se
       </Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20 },
-  title: { fontSize: 24, marginBottom: 20 },
-  input: { borderWidth: 1, marginBottom: 10, padding: 10 },
-})
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  input: {
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 10,
+    borderRadius: 5,
+  },
+  link: {
+    marginTop: 15,
+    color: "blue",
+    textAlign: "center",
+  },
+});
