@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from "../services/supabase";
 
 export default function LoginScreen({ navigation }: any) {
@@ -39,7 +39,7 @@ export default function LoginScreen({ navigation }: any) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Login</Text>
 
       <TextInput
@@ -60,7 +60,7 @@ export default function LoginScreen({ navigation }: any) {
       <Text style={styles.link} onPress={() => navigation.navigate("Cadastro")}>
         Não tem conta? Cadastre-se
       </Text>
-    </View>
+    </SafeAreaView>
   );
 }
 

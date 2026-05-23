@@ -5,7 +5,7 @@ import {
   FlatList,
   StyleSheet
 } from 'react-native'
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from '../../services/supabase'
 
 interface Reserva {
@@ -47,34 +47,36 @@ export default function ReservasPorteiroScreen() {
   }, [])
 
   return (
-    <FlatList
-      contentContainerStyle={styles.container}
-      data={reservas}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <View style={styles.card}>
-          <Text style={styles.title}>
-            {item.areas.nome}
-          </Text>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        contentContainerStyle={styles.container}
+        data={reservas}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text style={styles.title}>
+              {item.areas.nome}
+            </Text>
 
-          <Text>
-            Morador: {item.users.nome}
-          </Text>
+            <Text>
+              Morador: {item.users.nome}
+            </Text>
 
-          <Text>
-            Unidade: {item.users.unidade}
-          </Text>
+            <Text>
+              Unidade: {item.users.unidade}
+            </Text>
 
-          <Text>
-            Data: {item.data}
-          </Text>
+            <Text>
+              Data: {item.data}
+            </Text>
 
-          <Text>
-            {item.hora_inicio} - {item.hora_fim}
-          </Text>
-        </View>
-      )}
-    />
+            <Text>
+              {item.hora_inicio} - {item.hora_fim}
+            </Text>
+          </View>
+        )}
+      />
+    </SafeAreaView>
   )
 }
 

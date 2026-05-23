@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { supabase } from "../../services/supabase";
 
@@ -29,7 +30,7 @@ export default function AvisosScreen() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={avisos}
         keyExtractor={(item) => item.id}
@@ -45,7 +46,7 @@ export default function AvisosScreen() {
           </View>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

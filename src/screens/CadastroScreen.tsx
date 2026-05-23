@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Alert
 } from 'react-native'
+import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from '../services/supabase'
 
 export default function CadastroScreen({ navigation }: any) {
@@ -62,7 +63,7 @@ export default function CadastroScreen({ navigation }: any) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Cadastro</Text>
 
       <TextInput
@@ -121,7 +122,7 @@ export default function CadastroScreen({ navigation }: any) {
       <Text style={styles.link} onPress={() => navigation.goBack()}>
         Já tem conta? Voltar para login
       </Text>
-    </View>
+    </SafeAreaView>
   )
 }
 

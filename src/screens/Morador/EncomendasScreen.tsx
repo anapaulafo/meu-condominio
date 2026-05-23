@@ -9,6 +9,8 @@ import {
   Image
 } from 'react-native'
 
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import { supabase } from '../../services/supabase'
 
 interface Encomenda {
@@ -40,7 +42,6 @@ export default function EncomendasScreen() {
 
     if (!usuario) return
 
-    // BUSCAR ENCOMENDAS DA UNIDADE
     const { data, error } = await supabase
       .from('encomendas')
       .select('*')
@@ -64,11 +65,12 @@ export default function EncomendasScreen() {
   }, [])
 
   return (
-    <FlatList
-      contentContainerStyle={styles.container}
-      data={encomendas}
-      keyExtractor={(item) => item.id}
-      ListHeaderComponent={
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        contentContainerStyle={styles.container}
+        data={encomendas}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={
         <Text style={styles.title}>
           Minhas Encomendas
         </Text>
@@ -97,7 +99,8 @@ export default function EncomendasScreen() {
           </Text>
         </View>
       )}
-    />
+      />
+    </SafeAreaView>
   )
 }
 

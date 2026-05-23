@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Alert
 } from 'react-native'
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from '../../services/supabase'
 
 export default function PerfilScreen({
@@ -24,7 +24,7 @@ export default function PerfilScreen({
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>
         Perfil
       </Text>
@@ -33,7 +33,7 @@ export default function PerfilScreen({
         title="Sair"
         onPress={handleLogout}
       />
-    </View>
+    </SafeAreaView>
   )
 }
 

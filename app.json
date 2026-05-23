@@ -4,11 +4,11 @@
     "slug": "meu-condominio",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/skyscraper.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/skyscraper.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,14 +17,20 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/skyscraper.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.foanapaula.meucondominio"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/skyscraper.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "48a3e4aa-73d7-4a19-8556-125e949548ec"
+      }
     }
   }
 }

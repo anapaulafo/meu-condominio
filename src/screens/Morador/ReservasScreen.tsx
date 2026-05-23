@@ -9,6 +9,7 @@ import {
   FlatList,
   TouchableOpacity
 } from 'react-native'
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Calendar } from 'react-native-calendars'
 
@@ -47,7 +48,6 @@ export default function ReservasScreen() {
   const [reservasArea, setReservasArea] = useState<Reserva[]>([])
   const [minhasReservas, setMinhasReservas] = useState<Reserva[]>([])
 
-  // CARREGAR ÁREAS
   async function carregarAreas() {
     const { data, error } = await supabase
       .from('areas')
@@ -63,7 +63,6 @@ export default function ReservasScreen() {
     }
   }
 
-  // MINHAS RESERVAS
   async function carregarMinhasReservas() {
     const {
       data: { user }
@@ -90,7 +89,6 @@ export default function ReservasScreen() {
     }
   }
 
-  // TODAS RESERVAS DA ÁREA/DATA
   async function carregarReservasArea(
     areaId: string,
     dataReserva: string
@@ -137,7 +135,6 @@ export default function ReservasScreen() {
     return `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}`
   }
 
-  // CRIAR RESERVA
   async function criarReserva() {
     if (
       !areaSelecionada ||
@@ -183,7 +180,7 @@ export default function ReservasScreen() {
       return
     }
 
-    // BUSCAR CONFLITOS
+
     const {
       data: reservasExistentes,
       error: conflitoError
@@ -203,7 +200,7 @@ export default function ReservasScreen() {
       return
     }
 
-    // VERIFICAR HORÁRIO
+
     const conflito =
       reservasExistentes &&
       reservasExistentes.length > 0
@@ -216,7 +213,6 @@ export default function ReservasScreen() {
       return
     }
 
-    // INSERIR RESERVA
     const { error } = await supabase
       .from('reservas')
       .insert({
@@ -257,137 +253,140 @@ export default function ReservasScreen() {
   }, [])
 
   return (
-    <FlatList
-      ListHeaderComponent={
-        <View style={styles.container}>
-          <Text style={styles.title}>
-            Nova Reserva
-          </Text>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        contentContainerStyle={styles.listContent}
+        ListHeaderComponent={
+          <View>
+            <Text style={styles.title}>
+              Nova Reserva
+            </Text>
 
-          <Text style={styles.label}>
-            Escolha a área:
-          </Text>
+            <Text style={styles.label}>
+              Escolha a área:
+            </Text>
 
-          <View style={styles.areaContainer}>
-            {areas.map((area) => (
-              <TouchableOpacity
-                key={area.id}
-                style={[
-                  styles.areaButton,
-                  areaSelecionada === area.id &&
-                    styles.areaSelecionada
-                ]}
-                onPress={() => {
-                  setAreaSelecionada(area.id)
+            <View style={styles.areaContainer}>
+              {areas.map((area) => (
+                <TouchableOpacity
+                  key={area.id}
+                  style={[
+                    styles.areaButton,
+                    areaSelecionada === area.id &&
+                      styles.areaSelecionada
+                  ]}
+                  onPress={() => {
+                    setAreaSelecionada(area.id)
 
-                  if (dataSelecionada) {
-                    carregarReservasArea(
-                      area.id,
-                      dataSelecionada
-                    )
-                  }
-                }}
-              >
-                <Text style={styles.areaText}>
-                  {area.nome}
+                    if (dataSelecionada) {
+                      carregarReservasArea(
+                        area.id,
+                        dataSelecionada
+                      )
+                    }
+                  }}
+                >
+                  <Text style={styles.areaText}>
+                    {area.nome}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            <Calendar
+              onDayPress={(day) => {
+                setDataSelecionada(day.dateString)
+
+                if (areaSelecionada) {
+                  carregarReservasArea(
+                    areaSelecionada,
+                    day.dateString
+                  )
+                }
+              }}
+              markedDates={{
+                [dataSelecionada]: {
+                  selected: true
+                }
+              }}
+            />
+
+            {dataSelecionada !== '' && (
+              <>
+                <Text style={styles.subTitle}>
+                  Horários Ocupados
                 </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
 
-          <Calendar
-            onDayPress={(day) => {
-              setDataSelecionada(day.dateString)
-
-              if (areaSelecionada) {
-                carregarReservasArea(
-                  areaSelecionada,
-                  day.dateString
-                )
-              }
-            }}
-            markedDates={{
-              [dataSelecionada]: {
-                selected: true
-              }
-            }}
-          />
-
-          {dataSelecionada !== '' && (
-            <>
-              <Text style={styles.subTitle}>
-                Horários Ocupados
-              </Text>
-
-              {reservasArea.length === 0 ? (
-                <Text>
-                  Nenhuma reserva nesta data.
-                </Text>
-              ) : (
-                reservasArea.map((reserva) => (
-                  <View
-                    style={styles.card}
-                    key={reserva.id}
-                  >
-                    <Text style={styles.cardHorario}>
-                      {reserva.hora_inicio} -{' '}
-                      {reserva.hora_fim}
-                    </Text>
-
-                    {reserva.users?.nome && (
-                      <Text>
-                        Reservado por:{' '}
-                        {reserva.users.nome}
+                {reservasArea.length === 0 ? (
+                  <Text>
+                    Nenhuma reserva nesta data.
+                  </Text>
+                ) : (
+                  reservasArea.map((reserva) => (
+                    <View
+                      style={styles.card}
+                      key={reserva.id}
+                    >
+                      <Text style={styles.cardHorario}>
+                        {reserva.hora_inicio} -{' '}
+                        {reserva.hora_fim}
                       </Text>
-                    )}
-                  </View>
-                ))
-              )}
-            </>
-          )}
 
-          <TextInput
-            placeholder="Hora início (18:00)"
-            style={styles.input}
-            value={horaInicio}
-            onChangeText={setHoraInicio}
-          />
+                      {reserva.users?.nome && (
+                        <Text>
+                          Reservado por:{' '}
+                          {reserva.users.nome}
+                        </Text>
+                      )}
+                    </View>
+                  ))
+                )}
+              </>
+            )}
 
-          <TextInput
-            placeholder="Hora fim (20:00)"
-            style={styles.input}
-            value={horaFim}
-            onChangeText={setHoraFim}
-          />
+            <TextInput
+              placeholder="Hora início (18:00)"
+              style={styles.input}
+              value={horaInicio}
+              onChangeText={setHoraInicio}
+            />
 
-          <Button
-            title="Reservar"
-            onPress={criarReserva}
-          />
+            <TextInput
+              placeholder="Hora fim (20:00)"
+              style={styles.input}
+              value={horaFim}
+              onChangeText={setHoraFim}
+            />
 
-          <Text style={styles.subTitle}>
-            Minhas Reservas
-          </Text>
-        </View>
-      }
-      data={minhasReservas}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <View style={styles.card}>
-          <Text style={styles.cardHorario}>
-            {item.areas?.nome}
-          </Text>
+            <Button
+              title="Reservar"
+              onPress={criarReserva}
+            />
 
-          <Text>
-            Data: {item.data}
-          </Text>
+            <Text style={styles.subTitle}>
+              Minhas Reservas
+            </Text>
+          </View>
+        }
+        data={minhasReservas}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text style={styles.cardHorario}>
+              {item.areas?.nome}
+            </Text>
 
-          <Text>
-            {item.hora_inicio} - {item.hora_fim}
-          </Text>
-        </View>
-      )}
-    />
+            <Text>
+              Data: {item.data}
+            </Text>
+
+            <Text>
+              {item.hora_inicio} - {item.hora_fim}
+            </Text>
+          </View>
+        )}
+      />
+    </SafeAreaView>
   )
 }
 
@@ -398,11 +397,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F6F8',
   },
 
+  listContent: {
+    paddingBottom: 20,
+  },
+
   title: {
     fontSize: 30,
     fontWeight: '700',
     marginBottom: 24,
     color: '#1E3A5F',
+  },
+
+  label: {
+    fontSize: 16,
+    marginBottom: 12,
+    fontWeight: '600',
+    color: '#1F2937',
   },
 
   areaContainer: {
@@ -451,5 +461,18 @@ const styles = StyleSheet.create({
   },
 
   card: {
+    backgroundColor: '#FFFFFF',
+    padding: 18,
+    borderRadius: 18,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+
+  cardHorario: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 6,
+    color: '#1E3A5F',
   },
 })

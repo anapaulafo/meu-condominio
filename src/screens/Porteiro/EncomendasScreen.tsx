@@ -10,7 +10,7 @@ import {
   Alert,
   Image
 } from 'react-native'
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from 'expo-image-picker'
 
 import { supabase } from '../../services/supabase'
@@ -227,80 +227,82 @@ export default function EncomendasScreen() {
   }, [])
 
   return (
-    <FlatList
-      ListHeaderComponent={
-        <View style={styles.container}>
-          <Text style={styles.title}>
-            Registrar Encomenda
-          </Text>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        ListHeaderComponent={
+          <View style={styles.container}>
+            <Text style={styles.title}>
+              Registrar Encomenda
+            </Text>
 
-          <TextInput
-            placeholder="Unidade"
-            style={styles.input}
-            value={unidade}
-            onChangeText={setUnidade}
-          />
-
-          <Button
-            title="Tirar Foto"
-            onPress={tirarFoto}
-          />
-
-          {foto && (
-            <Image
-              source={{ uri: foto }}
-              style={styles.image}
+            <TextInput
+              placeholder="Unidade"
+              style={styles.input}
+              value={unidade}
+              onChangeText={setUnidade}
             />
-          )}
 
-          <View style={{ marginTop: 15 }}>
             <Button
-              title="Registrar"
-              onPress={cadastrarEncomenda}
+              title="Tirar Foto"
+              onPress={tirarFoto}
             />
+
+            {foto && (
+              <Image
+                source={{ uri: foto }}
+                style={styles.image}
+              />
+            )}
+
+            <View style={{ marginTop: 15 }}>
+              <Button
+                title="Registrar"
+                onPress={cadastrarEncomenda}
+              />
+            </View>
+
+            <Text style={styles.subTitle}>
+              Encomendas
+            </Text>
           </View>
+        }
+        data={encomendas}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text>
+              Unidade: {item.unidade}
+            </Text>
 
-          <Text style={styles.subTitle}>
-            Encomendas
-          </Text>
-        </View>
-      }
-      data={encomendas}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <View style={styles.card}>
-          <Text>
-            Unidade: {item.unidade}
-          </Text>
+            <Text>
+              Status: {item.status}
+            </Text>
 
-          <Text>
-            Status: {item.status}
-          </Text>
+            {item.foto_url ? (
+              <Image
+                source={{ uri: item.foto_url }}
+                style={styles.image}
+              />
+            ) : null}
 
-          {item.foto_url ? (
-            <Image
-              source={{ uri: item.foto_url }}
-              style={styles.image}
-            />
-          ) : null}
+            <Text>
+              {new Date(
+                item.data_recebimento
+              ).toLocaleString()}
+            </Text>
 
-          <Text>
-            {new Date(
-              item.data_recebimento
-            ).toLocaleString()}
-          </Text>
-
-          {item.status === 'pendente' && (
-            <Button
-              title="Marcar como retirado"
-              onPress={() =>
-                marcarRetirado(item.id)
-              }
-            />
-          )}
-        </View>
-      )}
-    />
+            {item.status === 'pendente' && (
+              <Button
+                title="Marcar como retirado"
+                onPress={() =>
+                  marcarRetirado(item.id)
+                }
+              />
+            )}
+          </View>
+        )}
+      />
+    </SafeAreaView>
   )
 }
 

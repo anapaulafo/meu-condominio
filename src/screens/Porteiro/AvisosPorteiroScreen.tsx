@@ -9,6 +9,7 @@ import {
   FlatList,
 } from "react-native";
 
+import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from "../../services/supabase";
 
 interface Aviso {
@@ -73,7 +74,7 @@ export default function AvisosPorteiroScreen() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Publicar Aviso</Text>
 
       <TextInput
@@ -111,7 +112,7 @@ export default function AvisosPorteiroScreen() {
           </View>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
