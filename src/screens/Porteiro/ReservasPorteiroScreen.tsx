@@ -80,17 +80,31 @@ export default function ReservasPorteiroScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#F4F6F8',
   },
+
   card: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 20,
+    marginBottom: 16,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    elevation: 3,
   },
+
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10
-  }
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 12,
+    color: '#1E3A5F',
+  },
 })

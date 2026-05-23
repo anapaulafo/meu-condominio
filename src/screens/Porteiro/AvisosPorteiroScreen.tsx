@@ -118,49 +118,75 @@ export default function AvisosPorteiroScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
-    backgroundColor: "#f2f2f2",
+    padding: 20,
+    backgroundColor: '#F4F6F8',
   },
+
   title: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 30,
+    fontWeight: '700',
+    color: '#1E3A5F',
+    marginBottom: 24,
   },
+
   subTitle: {
-    fontSize: 20,
-    marginTop: 25,
-    marginBottom: 10,
-    fontWeight: "bold",
+    fontSize: 22,
+    marginTop: 30,
+    marginBottom: 14,
+    fontWeight: '700',
+    color: '#1F2937',
   },
+
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-    backgroundColor: "#fff",
+    borderColor: '#D9E2EC',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 14,
+    backgroundColor: '#FFFFFF',
+    fontSize: 16,
+    color: '#1F2937',
   },
+
   textArea: {
     height: 120,
-    textAlignVertical: "top",
+    textAlignVertical: 'top',
   },
+
   card: {
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    elevation: 2,
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 20,
+    marginBottom: 16,
+    borderLeftWidth: 5,
+    borderLeftColor: '#3B82F6',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    elevation: 3,
   },
+
   cardTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
+    fontSize: 19,
+    fontWeight: '700',
+    marginBottom: 8,
+    color: '#1E3A5F',
   },
+
   cardMessage: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 12,
+    lineHeight: 24,
+    color: '#4B5563',
   },
+
   cardDate: {
-    fontSize: 12,
-    color: "gray",
+    fontSize: 13,
+    color: '#6B7280',
   },
-});
+})

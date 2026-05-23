@@ -393,57 +393,63 @@ export default function ReservasScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#F4F6F8',
   },
+
   title: {
-    fontSize: 24,
-    marginBottom: 15
+    fontSize: 30,
+    fontWeight: '700',
+    marginBottom: 24,
+    color: '#1E3A5F',
   },
-  label: {
-    marginBottom: 10,
-    fontWeight: 'bold'
-  },
+
   areaContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 20
+    marginBottom: 20,
   },
+
   areaButton: {
-    padding: 10,
-    backgroundColor: '#ddd',
-    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 14,
     marginRight: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#D9E2EC',
   },
+
   areaSelecionada: {
-    backgroundColor: '#007bff'
+    backgroundColor: '#1E3A5F',
+    borderColor: '#1E3A5F',
   },
+
   areaText: {
-    color: '#000',
-    fontWeight: 'bold'
+    color: '#1F2937',
+    fontWeight: '700',
   },
+
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
+    borderColor: '#D9E2EC',
+    padding: 16,
     marginTop: 10,
-    borderRadius: 5,
-    backgroundColor: '#fff'
-  },
-  subTitle: {
-    fontSize: 20,
-    marginTop: 30,
-    marginBottom: 15,
-    fontWeight: 'bold'
-  },
-  card: {
-    backgroundColor: '#fff',
-    padding: 15,
-    marginTop: 10,
-    borderRadius: 10
-  },
-  cardHorario: {
+    borderRadius: 16,
+    backgroundColor: '#FFFFFF',
     fontSize: 16,
-    fontWeight: 'bold'
-  }
+  },
+
+  subTitle: {
+    fontSize: 22,
+    marginTop: 30,
+    marginBottom: 16,
+    fontWeight: '700',
+    color: '#1F2937',
+  },
+
+  card: {
+  },
 })

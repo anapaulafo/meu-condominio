@@ -129,44 +129,68 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 20
+    padding: 24,
+    backgroundColor: '#F4F6F8',
   },
+
   title: {
-    fontSize: 24,
-    marginBottom: 20
+    fontSize: 32,
+    fontWeight: '700',
+    color: '#1E3A5F',
+    marginBottom: 30,
+    textAlign: 'center',
   },
+
   input: {
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
-    borderRadius: 5
+    borderColor: '#D9E2EC',
+    marginBottom: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    borderRadius: 16,
+    fontSize: 16,
+    color: '#1F2937',
   },
+
   label: {
     marginTop: 10,
-    marginBottom: 5
+    marginBottom: 8,
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#1F2937',
   },
+
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10
+    marginBottom: 20,
   },
+
   option: {
     flex: 1,
-    padding: 12,
+    paddingVertical: 14,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#D9E2EC',
     textAlign: 'center',
-    borderRadius: 5,
-    marginHorizontal: 5
+    borderRadius: 16,
+    marginHorizontal: 5,
+    backgroundColor: '#FFFFFF',
+    color: '#1F2937',
+    fontWeight: '600',
   },
+
   selectedOption: {
-    backgroundColor: '#007bff',
-    color: '#fff',
-    borderColor: '#007bff'
+    backgroundColor: '#1E3A5F',
+    color: '#FFFFFF',
+    borderColor: '#1E3A5F',
   },
+
   link: {
-    marginTop: 15,
-    color: 'blue',
-    textAlign: 'center'
-  }
+    marginTop: 20,
+    color: '#3B82F6',
+    textAlign: 'center',
+    fontSize: 15,
+    fontWeight: '600',
+  },
 })

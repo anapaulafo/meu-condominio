@@ -67,22 +67,45 @@ export default function LoginScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    padding: 20,
+    justifyContent: 'center',
+    padding: 24,
+    backgroundColor: '#F4F6F8',
   },
+
   title: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 34,
+    fontWeight: '700',
+    color: '#1E3A5F',
+    marginBottom: 32,
+    textAlign: 'center',
   },
+
   input: {
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
-    borderRadius: 5,
+    borderColor: '#D9E2EC',
+    marginBottom: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    borderRadius: 16,
+    fontSize: 16,
+    color: '#1F2937',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 2,
   },
+
   link: {
-    marginTop: 15,
-    color: "blue",
-    textAlign: "center",
+    marginTop: 20,
+    color: '#3B82F6',
+    textAlign: 'center',
+    fontSize: 15,
+    fontWeight: '600',
   },
-});
+})

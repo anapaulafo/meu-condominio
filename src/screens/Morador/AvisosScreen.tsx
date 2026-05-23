@@ -52,27 +52,44 @@ export default function AvisosScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
-    backgroundColor: "#f2f2f2",
+    padding: 20,
+    backgroundColor: '#F4F6F8',
   },
+
   card: {
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    elevation: 2,
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 20,
+    marginBottom: 16,
+    borderLeftWidth: 5,
+    borderLeftColor: '#3B82F6',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    elevation: 3,
   },
+
   titulo: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
+    fontSize: 19,
+    fontWeight: '700',
+    marginBottom: 8,
+    color: '#1E3A5F',
   },
+
   mensagem: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 12,
+    lineHeight: 24,
+    color: '#4B5563',
   },
+
   data: {
-    fontSize: 12,
-    color: "gray",
+    fontSize: 13,
+    color: '#6B7280',
   },
-});
+})
