@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   Button,
+  ScrollView,
   StyleSheet,
   Alert
 } from 'react-native'
@@ -64,64 +65,69 @@ export default function CadastroScreen({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Cadastro</Text>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Text style={styles.title}>Cadastro</Text>
 
-      <TextInput
-        placeholder="Nome"
-        style={styles.input}
-        onChangeText={setNome}
-      />
-
-      <TextInput
-        placeholder="Email"
-        style={styles.input}
-        onChangeText={setEmail}
-      />
-
-      <TextInput
-        placeholder="Senha"
-        secureTextEntry
-        style={styles.input}
-        onChangeText={setPassword}
-      />
-
-      <Text style={styles.label}>Tipo de usuário:</Text>
-
-      <View style={styles.row}>
-        <Text
-          style={[
-            styles.option,
-            role === 'morador' && styles.selectedOption
-          ]}
-          onPress={() => setRole('morador')}
-        >
-          Morador
-        </Text>
-
-        <Text
-          style={[
-            styles.option,
-            role === 'porteiro' && styles.selectedOption
-          ]}
-          onPress={() => setRole('porteiro')}
-        >
-          Porteiro
-        </Text>
-      </View>
-
-      {role === 'morador' && (
         <TextInput
-          placeholder="Unidade (ex: Apt 101)"
+          placeholder="Nome"
           style={styles.input}
-          onChangeText={setUnidade}
+          onChangeText={setNome}
         />
-      )}
 
-      <Button title="Cadastrar" onPress={handleCadastro} />
+        <TextInput
+          placeholder="Email"
+          style={styles.input}
+          onChangeText={setEmail}
+        />
 
-      <Text style={styles.link} onPress={() => navigation.goBack()}>
-        Já tem conta? Voltar para login
-      </Text>
+        <TextInput
+          placeholder="Senha"
+          secureTextEntry
+          style={styles.input}
+          onChangeText={setPassword}
+        />
+
+        <Text style={styles.label}>Tipo de usuário:</Text>
+
+        <View style={styles.row}>
+          <Text
+            style={[
+              styles.option,
+              role === 'morador' && styles.selectedOption
+            ]}
+            onPress={() => setRole('morador')}
+          >
+            Morador
+          </Text>
+
+          <Text
+            style={[
+              styles.option,
+              role === 'porteiro' && styles.selectedOption
+            ]}
+            onPress={() => setRole('porteiro')}
+          >
+            Porteiro
+          </Text>
+        </View>
+
+        {role === 'morador' && (
+          <TextInput
+            placeholder="Unidade (ex: Apt 101)"
+            style={styles.input}
+            onChangeText={setUnidade}
+          />
+        )}
+
+        <Button title="Cadastrar" onPress={handleCadastro} />
+
+        <Text style={styles.link} onPress={() => navigation.goBack()}>
+          Já tem conta? Voltar para login
+        </Text>
+      </ScrollView>
     </SafeAreaView>
   )
 }
@@ -129,9 +135,13 @@ export default function CadastroScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     padding: 24,
     backgroundColor: '#F4F6F8',
+  },
+
+  content: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
 
   title: {

@@ -8,7 +8,8 @@ import {
   StyleSheet,
   FlatList,
   Alert,
-  Image
+  Image,
+  ActivityIndicator
 } from 'react-native'
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from 'expo-image-picker'
@@ -27,26 +28,33 @@ export default function EncomendasScreen() {
   const [unidade, setUnidade] = useState('')
 
   const [foto, setFoto] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
 
   const [encomendas, setEncomendas] = useState<
     Encomenda[]
   >([])
 
   async function carregarEncomendas() {
-    const { data, error } = await supabase
-      .from('encomendas')
-      .select('*')
-      .order('data_recebimento', {
-        ascending: false
-      })
+    setLoading(true)
 
-    if (error) {
-      Alert.alert('Erro', error.message)
-      return
-    }
+    try {
+      const { data, error } = await supabase
+        .from('encomendas')
+        .select('*')
+        .order('data_recebimento', {
+          ascending: false
+        })
 
-    if (data) {
-      setEncomendas(data)
+      if (error) {
+        Alert.alert('Erro', error.message)
+        return
+      }
+
+      if (data) {
+        setEncomendas(data)
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -228,6 +236,14 @@ export default function EncomendasScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#1E3A5F" />
+          <Text style={styles.loadingText}>
+            Carregando encomendas...
+          </Text>
+        </View>
+      ) : (
       <FlatList
         ListHeaderComponent={
           <View style={styles.container}>
@@ -302,6 +318,7 @@ export default function EncomendasScreen() {
           </View>
         )}
       />
+      )}
     </SafeAreaView>
   )
 }
@@ -311,6 +328,19 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#F4F6F8',
+  },
+
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  loadingText: {
+    marginTop: 12,
+    color: '#1F2937',
+    fontSize: 16,
+    fontWeight: '600',
   },
 
   title: {

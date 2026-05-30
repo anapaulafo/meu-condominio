@@ -6,7 +6,8 @@ import {
   FlatList,
   StyleSheet,
   Alert,
-  Image
+  Image,
+  ActivityIndicator
 } from 'react-native'
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -22,41 +23,54 @@ interface Encomenda {
 }
 
 export default function EncomendasScreen() {
+  const [loading, setLoading] = useState(true)
   const [encomendas, setEncomendas] = useState<
     Encomenda[]
   >([])
 
   async function carregarEncomendas() {
-    const {
-      data: { user }
-    } = await supabase.auth.getUser()
+    setLoading(true)
 
-    if (!user) return
+    try {
+      const {
+        data: { user }
+      } = await supabase.auth.getUser()
 
-    // BUSCAR UNIDADE DO MORADOR
-    const { data: usuario } = await supabase
-      .from('users')
-      .select('unidade')
-      .eq('id', user.id)
-      .single()
+      if (!user) {
+        setEncomendas([])
+        return
+      }
 
-    if (!usuario) return
+      // BUSCAR UNIDADE DO MORADOR
+      const { data: usuario } = await supabase
+        .from('users')
+        .select('unidade')
+        .eq('id', user.id)
+        .single()
 
-    const { data, error } = await supabase
-      .from('encomendas')
-      .select('*')
-      .eq('unidade', usuario.unidade)
-      .order('data_recebimento', {
-        ascending: false
-      })
+      if (!usuario) {
+        setEncomendas([])
+        return
+      }
 
-    if (error) {
-      Alert.alert('Erro', error.message)
-      return
-    }
+      const { data, error } = await supabase
+        .from('encomendas')
+        .select('*')
+        .eq('unidade', usuario.unidade)
+        .order('data_recebimento', {
+          ascending: false
+        })
 
-    if (data) {
-      setEncomendas(data)
+      if (error) {
+        Alert.alert('Erro', error.message)
+        return
+      }
+
+      if (data) {
+        setEncomendas(data)
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -66,6 +80,14 @@ export default function EncomendasScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#1E3A5F" />
+          <Text style={styles.loadingText}>
+            Carregando encomendas...
+          </Text>
+        </View>
+      ) : (
       <FlatList
         contentContainerStyle={styles.container}
         data={encomendas}
@@ -100,6 +122,7 @@ export default function EncomendasScreen() {
         </View>
       )}
       />
+      )}
     </SafeAreaView>
   )
 }
@@ -109,6 +132,19 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#F4F6F8',
+  },
+
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  loadingText: {
+    marginTop: 12,
+    color: '#1F2937',
+    fontSize: 16,
+    fontWeight: '600',
   },
 
   title: {
